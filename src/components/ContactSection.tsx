@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, Linkedin } from "lucide-react";
+import { Mail, Phone, Linkedin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,46 +17,53 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="section-padding bg-secondary/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Get In Touch
-          </h2>
-          <div className="w-16 h-1 bg-accent mb-10 rounded-full" />
+          <div className="flex items-center gap-3 mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Get In Touch
+            </h2>
+            <div className="h-px flex-1 bg-border" />
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <p className="text-muted-foreground leading-relaxed">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 I'm always open to discussing new opportunities, projects, or collaborations. Feel free to reach out!
               </p>
-              <div className="space-y-4">
-                <a href="mailto:abutaheransari555@gmail.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors">
-                  <Mail className="h-4 w-4 text-accent" />
-                  abutaheransari555@gmail.com
-                </a>
-                <a href="tel:+917020823266" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors">
-                  <Phone className="h-4 w-4 text-accent" />
-                  +91 7020823266
-                </a>
-                <a href="https://linkedin.com/in/abu-taher-ansari" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors">
-                  <Linkedin className="h-4 w-4 text-accent" />
-                  linkedin.com/in/abu-taher-ansari
-                </a>
+              <div className="space-y-2">
+                {[
+                  { icon: Mail, label: "abutaheransari555@gmail.com", href: "mailto:abutaheransari555@gmail.com" },
+                  { icon: Phone, label: "+91 7020823266", href: "tel:+917020823266" },
+                  { icon: Linkedin, label: "linkedin.com/in/abu-taher-ansari", href: "https://linkedin.com/in/abu-taher-ansari" },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.icon === Linkedin ? "_blank" : undefined}
+                    rel={item.icon === Linkedin ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-accent transition-colors glass rounded-lg px-4 py-3"
+                  >
+                    <item.icon className="h-4 w-4 text-accent shrink-0" />
+                    {item.label}
+                  </a>
+                ))}
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <Input
                 placeholder="Your Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
+                className="rounded-lg"
               />
               <Input
                 type="email"
@@ -64,15 +71,18 @@ export default function ContactSection() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 required
+                className="rounded-lg"
               />
               <Textarea
                 placeholder="Your Message"
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 required
-                rows={5}
+                rows={4}
+                className="rounded-lg"
               />
-              <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
+                <Send className="mr-2 h-4 w-4" />
                 Send Message
               </Button>
             </form>
