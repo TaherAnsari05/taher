@@ -14,7 +14,13 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(() => {
+    // Check system preference on initial load
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return true; // Fallback to dark for server-side rendering
+  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -25,6 +31,17 @@ export default function Navbar() {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
+
+  useEffect(() => {
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setDark(e.matches);
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   return (
     <nav
