@@ -96,9 +96,9 @@ export default function ContactSection() {
                 rows={4}
                 className="rounded-lg"
               />
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
-                <Send className="mr-2 h-4 w-4" />
-                Send Message
+              <Button type="submit" disabled={sending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
+                {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
+                {sending ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
