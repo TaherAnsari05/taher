@@ -9,12 +9,26 @@ import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({ title: "Message sent!", description: "Thanks for reaching out. I'll get back to you soon." });
-    setForm({ name: "", email: "", message: "" });
+    setSending(true);
+    try {
+      await emailjs.send(
+        "service_qqpz1mt",
+        "template_1kjypua",
+        { from_name: form.name, from_email: form.email, message: form.message },
+        "wYAJVL_iVP7WJ4d9s"
+      );
+      toast({ title: "Message sent!", description: "Thanks for reaching out. I'll get back to you soon." });
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      toast({ title: "Failed to send", description: "Something went wrong. Please try again.", variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
