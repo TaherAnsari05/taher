@@ -1,19 +1,34 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, Linkedin, Send } from "lucide-react";
+import { Mail, Phone, Linkedin, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({ title: "Message sent!", description: "Thanks for reaching out. I'll get back to you soon." });
-    setForm({ name: "", email: "", message: "" });
+    setSending(true);
+    try {
+      await emailjs.send(
+        "service_qqpz1mt",
+        "template_1kjypua",
+        { from_name: form.name, from_email: form.email, message: form.message },
+        "wYAJVL_iVP7WJ4d9s"
+      );
+      toast({ title: "Message sent!", description: "Thanks for reaching out. I'll get back to you soon." });
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      toast({ title: "Failed to send", description: "Something went wrong. Please try again.", variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -81,9 +96,9 @@ export default function ContactSection() {
                 rows={4}
                 className="rounded-lg"
               />
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
-                <Send className="mr-2 h-4 w-4" />
-                Send Message
+              <Button type="submit" disabled={sending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
+                {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
+                {sending ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
