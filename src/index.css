@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -34,7 +34,7 @@
     --input: 214 32% 91%;
     --ring: 222 47% 18%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -50,7 +50,7 @@
     --background: 222 47% 6%;
     --foreground: 210 40% 96%;
 
-    --card: 222 47% 10%;
+    --card: 222 40% 10%;
     --card-foreground: 210 40% 96%;
 
     --popover: 222 47% 10%;
@@ -71,7 +71,7 @@
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 20%;
+    --border: 217 33% 18%;
     --input: 217 33% 20%;
     --ring: 210 100% 65%;
 
@@ -92,11 +92,39 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-card/70 backdrop-blur-xl border border-border/50;
+  }
+
+  .glass-strong {
+    @apply bg-card/90 backdrop-blur-2xl border border-border/60;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary;
+  }
+
+  .dark .gradient-text {
+    @apply bg-gradient-to-r from-accent to-primary;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-20;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
   }
 }

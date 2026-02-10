@@ -44,50 +44,52 @@ const experiences = [
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 bg-secondary/30">
+    <section id="experience" className="section-padding">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Professional Experience
-          </h2>
-          <div className="w-16 h-1 bg-accent mb-10 rounded-full" />
+          <div className="flex items-center gap-3 mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Experience
+            </h2>
+            <div className="h-px flex-1 bg-border" />
+          </div>
 
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-4 md:left-6 top-0 bottom-0 w-px bg-border" />
+            <div className="absolute left-3 top-0 bottom-0 w-px bg-gradient-to-b from-accent via-accent/50 to-transparent" />
 
-            <div className="space-y-10">
+            <div className="space-y-6">
               {experiences.map((exp, i) => (
                 <motion.div
                   key={exp.company}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.15 }}
-                  className="relative pl-12 md:pl-16"
+                  transition={{ duration: 0.4, delay: i * 0.12 }}
+                  className="relative pl-10"
                 >
-                  {/* Timeline dot */}
-                  <div className="absolute left-2 md:left-4 top-1 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
-                    <Briefcase className="h-3 w-3 text-accent-foreground" />
+                  <div className="absolute left-1 top-1 w-5 h-5 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center">
+                    <Briefcase className="h-2.5 w-2.5 text-accent" />
                   </div>
 
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                  <div className="glass rounded-xl p-5 hover-lift">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                       <div>
-                        <h3 className="font-semibold text-foreground text-lg">{exp.title}</h3>
-                        <p className="text-accent font-medium text-sm">{exp.company} — {exp.location}</p>
+                        <h3 className="font-semibold text-foreground">{exp.title}</h3>
+                        <p className="text-accent font-medium text-sm">{exp.company} · {exp.location}</p>
                       </div>
-                      <span className="text-xs text-muted-foreground mt-1 sm:mt-0 whitespace-nowrap">{exp.period}</span>
+                      <span className="text-xs font-mono text-muted-foreground mt-1 sm:mt-0 whitespace-nowrap bg-secondary/50 px-2 py-0.5 rounded-full">
+                        {exp.period}
+                      </span>
                     </div>
-                    <ul className="space-y-2">
+                    <ul className="space-y-1.5 mt-3">
                       {exp.bullets.map((b, j) => (
-                        <li key={j} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent/60 shrink-0" />
+                        <li key={j} className="text-xs text-muted-foreground flex items-start gap-2 leading-relaxed">
+                          <span className="mt-1.5 h-1 w-1 rounded-full bg-accent shrink-0" />
                           {b}
                         </li>
                       ))}
