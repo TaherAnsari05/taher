@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, Linkedin, Send } from "lucide-react";
+import { Mail, Phone, Linkedin, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
